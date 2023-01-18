@@ -1,0 +1,14 @@
+form {
+  margin: 0 auto;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: seashell;
+  border-radius: 4px;
+
+}
+
+form div{
+    margin-top: .5rem;
+
+}

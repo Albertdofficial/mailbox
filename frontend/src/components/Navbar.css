@@ -1,0 +1,11 @@
+.navbar{
+    background: slategray;
+    padding: 2rem 0;
+}
+
+.navbar a{
+    margin-left: 1rem;
+    color: #fff;
+    text-decoration: none;
+
+}
