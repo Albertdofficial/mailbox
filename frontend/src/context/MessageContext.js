@@ -10,6 +10,8 @@ export const messageReducer = (state, action)=>{
             return {
                 messages: [action.payload, ...state.messages]
             }
+        case "UPDATE_MESSAGE": 
+            return {message:action.payload}
         default:
             return state
     }

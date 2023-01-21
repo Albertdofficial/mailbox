@@ -1,9 +1,14 @@
-import React from 'react'
+import { useReadMessageContext } from "../hooks/useReadMessageContext";
 
 const Message = () => {
-  return (
-    <div>Message</div>
-  )
-}
+  const { message } = useReadMessageContext();
 
-export default Message
+  return (
+    <div>
+      <p> {message.subject}</p>
+      <p> {message.content}</p>
+    </div>
+  );
+};
+
+export default Message;

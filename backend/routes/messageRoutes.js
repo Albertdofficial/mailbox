@@ -1,20 +1,28 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const requireAuth = require("../middleware/requireAuth");
 
-const{getMessages,
-     sendMessage, 
-     getMessage,
-     deleteMessage} = require('../controllers/messageController')
+const router = express.Router();
 
+// require auth for all messages routes
+router.use(requireAuth);
 
-router.get('/', getMessages)
+const {
+  getMessages,
+  sendMessage,
+  getMessage,
+  deleteMessage,
+  updateMessage
+} = require("../controllers/messageController");
 
-router.get('/:id', getMessage)
+router.get("/", getMessages);
 
-router.delete('/:id', deleteMessage)
+router.get("/:id", getMessage);
+
+router.delete("/:id", deleteMessage);
+
+router.patch("/:id", updateMessage)
 
 // send a new message
-router.post('/', sendMessage)
+router.post("/", sendMessage);
 
-module.exports = router
-
+module.exports = router;

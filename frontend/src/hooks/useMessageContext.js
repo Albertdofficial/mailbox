@@ -1,11 +1,13 @@
 import { MessageContext } from "../context/MessageContext";
-import {useContext} from 'react'
+import { useContext } from "react";
 
-export const useWorkoutContext = ()=>{
-    const context = useContext(MessageContext)
+export const useMessageContext = () => {
+  const context = useContext(MessageContext);
 
-    if(context === undefined){
-        throw Error('useMessageContext must be used inside a MessageContextProvider')
-    }
-    return context
-}
+  if (context === undefined) {
+    throw Error(
+      "useMessageContext must be used inside a MessageContextProvider"
+    );
+  }
+  return context;
+};
