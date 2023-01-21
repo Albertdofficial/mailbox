@@ -14,14 +14,14 @@ export const readReducer = (state, action) => {
 export const ReadMessageContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(readReducer, { message: null });
 
-  useEffect(() => {
+   useEffect(() => {
     // fetch message from local storage
     const message = JSON.parse(localStorage.getItem("message"));
 
     if (message) {
       dispatch({ type: "READ_MESSAGE", payload: message });
     }
-  }, []);
+  }, []); 
 
   console.log("ReadMessageContext state:", state);
 

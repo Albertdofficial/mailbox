@@ -20,6 +20,8 @@ export const messageReducer = (state, action)=>{
 export const MessageContextProvider = ({children})=>{
     const [state, dispatch] = useReducer(messageReducer, {messages:null})
 
+    console.log('MessageContext state:', state);
+
     return(
         <MessageContext.Provider value={{...state, dispatch}} >
             {children}

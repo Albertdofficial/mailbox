@@ -2,9 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Inbox from "./pages/Inbox";
-import Login from "./pages/Login";
 import Message from "./pages/Message";
-import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -18,7 +16,7 @@ function App() {
           <Route path="/inbox" element={<Inbox />} />
         </Routes>
         <Routes>
-          <Route path="/message" element={<Message />} />
+          <Route path="/message/:id" element={<Message />} />
         </Routes>
       </Router>
     </div>

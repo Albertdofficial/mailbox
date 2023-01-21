@@ -28,7 +28,9 @@ const getMessage = async (req, res) => {
   res.status(200).json(message);
 };
 
-// send a message
+//@desc send a message
+//@method POST
+//@route /api/message
 const sendMessage = async (req, res) => {
   const { subject, content, isRead } = req.body;
 
@@ -56,17 +58,21 @@ const deleteMessage = async (req, res) => {
 };
 
 const updateMessage = async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+  console.log(req.params.id);
 
-  if (id) {
+  if (req.params.id) {
+
     try {
-      const message = await Message.findOneAndUpdate({ id }, { isRead: true });
-      res.status(200).json({ message });
+      const message = await Message.findOneAndUpdate({_id:req.params.id}, {isRead: true}, {new:true});
+      if(message.isRead){
+        res.status(200).json({ message });
+      }
     } catch (error) {
       res.status(400).json({ message: "Request not authorized" });
     }
+
   }
+
 };
 
 module.exports = {

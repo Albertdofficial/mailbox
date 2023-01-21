@@ -25,5 +25,5 @@ mongoose
   });
 
   // routes
-  app.use('/message', messageRoutes)
+  app.use('/api/message', messageRoutes)
   app.use('/api/user', userRoutes)

@@ -16,14 +16,12 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { user: null });
 
-  // setting initial auth status
+  // setting initial auth status wit predefined user
   useEffect(() => {
-    // fetch from local storage
-    // const json = localStorage.getItem("user");
     const user = {
-      email: "email:albert@gmail.com",
+      email: "albert@gmail.com",
       token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2IzMDE1NzE4ODZjN2RmZGJmNTU3YjUiLCJpYXQiOjE2NzQxNDg4NTYsImV4cCI6MTY3NDQwODA1Nn0.0qiMWjXk2hPezsm7p2GQcVB09HvjN6ibEXjc_T60o2c",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2IzMDE1NzE4ODZjN2RmZGJmNTU3YjUiLCJpYXQiOjE2NzQyOTk4MzIsImV4cCI6MTY3NDU1OTAzMn0.hwE9GY4e9TTadKqnU7KMy0XKoqOPpSVC2dvNXS1Nl4k",
     };
 
     if (user) {

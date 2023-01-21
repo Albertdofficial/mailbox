@@ -13,13 +13,14 @@ const Home = () => {
   useEffect(() => {
     // fetchs all messages
     const fetchMessages = async () => {
-      const response = await fetch("http://localhost:5000/message", {
+      const response = await fetch("http://localhost:5000/api/message", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token} `,
         },
       });
       const data = await response.json();
+      
 
       if (response.ok) {
         dispatch({ type: "GET_MESSAGES", payload: data });
@@ -31,6 +32,8 @@ const Home = () => {
     }
   }, [dispatch, user]);
 
+  messages && console.log('homapage',messages);
+
   messages &&
     messages.map((message) => {
       if (!message.isRead) {
@@ -38,12 +41,13 @@ const Home = () => {
       }
     });
 
+
   return (
     <div className="home">
       <h3>Hello Albert</h3>
       <h3>
         You have {messages && unreadMessages.length} unread out of{" "}
-        {messages && messages.length} messages{" "}
+        {messages && messages.length} messages total{" "}
       </h3>
       <div className="btn-container">
         <button className="btn">
