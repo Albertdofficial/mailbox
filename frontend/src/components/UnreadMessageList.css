@@ -1,0 +1,8 @@
+.unread-message {
+  color: blue;
+}
+
+.unread-message:hover {
+    cursor: pointer;
+    color: blueviolet;
+  }

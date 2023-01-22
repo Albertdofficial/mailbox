@@ -1,4 +1,14 @@
-.message-content a{
-    color: #212121;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
+.message-list {
+  margin-top: 1rem;
+  font-size: 2rem;
+  display: flex;
+  margin-left: 5rem;
 }
+
+.message-list a {
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+}
+

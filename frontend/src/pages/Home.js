@@ -6,33 +6,54 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import "./Home.css";
 
 const Home = () => {
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
   const { messages, dispatch } = useMessageContext(); // global state
   const { user } = useAuthContext();
   const unreadMessages = [];
 
   useEffect(() => {
+    const controller = new AbortController();
     // fetchs all messages
     const fetchMessages = async () => {
-      const response = await fetch("http://localhost:5000/api/message", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token} `,
-        },
-      });
-      const data = await response.json();
-      
-
-      if (response.ok) {
-        dispatch({ type: "GET_MESSAGES", payload: data });
+      try{
+        setIsPending(true)
+        const response = await fetch(
+          "http://localhost:5000/api/message",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token} `,
+            },
+          },
+          { signal: controller.signal }
+        );
+        const data = await response.json();
+  
+        if (response.ok) {
+          setIsPending(false)
+          dispatch({ type: "GET_MESSAGES", payload: data });
+        }
+      }catch(error){
+        if(error.name === 'AbortError'){
+          console.log('The fetch was aborted');
+        }else{
+          setError(error.name)
+          setIsPending(false)
+        }
       }
     };
+
     // fetch messages if a user
     if (user) {
       fetchMessages();
     }
-  }, [dispatch, user]);
 
-  messages && console.log('homapage',messages);
+    // cleanup function
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch, user]);
 
   messages &&
     messages.map((message) => {
@@ -40,7 +61,6 @@ const Home = () => {
         unreadMessages.push(message);
       }
     });
-
 
   return (
     <div className="home">
@@ -55,6 +75,8 @@ const Home = () => {
           <Link to="/inbox"> View Messages</Link>{" "}
         </button>
       </div>
+      {isPending && <p className="loading"> Loading..</p>}
+      {error && <p className="error">An Error has occured</p>}
     </div>
   );
 };

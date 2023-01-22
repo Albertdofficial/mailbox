@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+.message {
+  width: 40rem;
+  margin: 0 auto;
+  font-family: "Roboto", sans-serif;
+}
+
+.message h1 {
+  font-size: 2rem;
+  color: #212121;
+}
+
+.message p {
+  font-size: 1.5rem;
+  color: #333;
+  line-height: 2rem;
+}
