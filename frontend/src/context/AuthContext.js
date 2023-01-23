@@ -19,9 +19,10 @@ export const AuthContextProvider = ({ children }) => {
   // setting initial auth status wit predefined user
   useEffect(() => {
     const user = {
+      name: 'Albert',
       email: "albert@gmail.com",
       token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2IzMDE1NzE4ODZjN2RmZGJmNTU3YjUiLCJpYXQiOjE2NzQyOTk4MzIsImV4cCI6MTY3NDU1OTAzMn0.hwE9GY4e9TTadKqnU7KMy0XKoqOPpSVC2dvNXS1Nl4k",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2NlMmEzNjUxODU3YzEzYzA0NDRkODAiLCJpYXQiOjE2NzQ0NTU2MDd9.gAEaAR5bHw5rXC8AyTuhfuV9htlyIUZPpMQ2bbZFKzY",
     };
 
     if (user) {

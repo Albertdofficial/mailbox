@@ -12,3 +12,17 @@
   text-decoration: none;
 }
 
+.loading {
+  color: orange;
+}
+
+.error {
+  color: orangered;
+}
+
+.error,
+.loading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}

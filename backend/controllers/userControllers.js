@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
+  return jwt.sign({ _id }, process.env.SECRET);
 };
 
-// desc    ogins in a user
+// desc    logins in a user
 // @route  /api/user/login
 // method POST
 const loginUser = async (req, res) => {
@@ -28,10 +28,10 @@ const loginUser = async (req, res) => {
 // route  /api/user/signup
 // method POST
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
-    const user = await User.signup(email, password);
+    const user = await User.signup(name, email, password);
 
     // create token
     const token = createToken(user._id);
@@ -43,12 +43,23 @@ const signupUser = async (req, res) => {
   }
 };
 
+// @desc    gets all users
+// route  /api/user/signup
+// method GET
 const getUsers = async (req, res) => {
-  const users = await User.find({});
+  try {
+    const users = await User.find({});
 
-  res.status(200).json(users);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
+
+// @desc    deteles a user
+// route  /api/user/signup
+// method DELETE
 const deleteUser = async (req, res) => {
   const { id } = req.params;
 
@@ -56,13 +67,17 @@ const deleteUser = async (req, res) => {
     return res.status(404).json({ error: "Invalid ID" });
   }
 
-  const user = await User.findOneAndDelete({ _id: id });
+  try {
+    const user = await User.findOneAndDelete({ _id: id });
 
-  if (!user) {
-    return res.status(400).json({ error: "No such user" });
+    if (!user) {
+      return res.status(400).json({ error: "No such user" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
-
-  res.status(200).json(user);
 };
 
 module.exports = { loginUser, signupUser, getUsers, deleteUser };

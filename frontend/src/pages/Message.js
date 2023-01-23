@@ -53,7 +53,7 @@ const Message = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [id, user.token]);
 
   return (
     <div className="container">

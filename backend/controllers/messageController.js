@@ -1,30 +1,46 @@
 const mongoose = require("mongoose");
 const Message = require("../models/messageModel");
 
-// get all messages
+
+//@desc get all messages
+//@method GET
+//@route /api/message
 const getMessages = async (req, res) => {
-  const message = await Message.find({}).sort({ createdAt: -1 });
+  try {
+    const user_id = req.user._id;
+    const message = await Message.find({ user_id });
 
-  if (!message) {
-    return res.status(404).json({ error: "You have no message" });
+    if (!message) {
+      return res.status(404).json({ error: "You have no message" });
+    }
+
+    res.status(200).json(message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
-
-  res.status(200).json(message);
 };
 
-// get a message
+
+//@desc get a message
+//@method GET
+//@route /api/message
 const getMessage = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such message" });
   }
-  const message = await Message.findById(id);
 
-  if (!message) {
-    return res.status(400).json({ error: "No such message" });
+  try {
+    const message = await Message.findById(id);
+
+    if (!message) {
+      return res.status(400).json({ error: "No such message" });
+    }
+    res.status(200).json(message);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
-  res.status(200).json(message);
 };
 
 //@desc send a message
@@ -33,14 +49,48 @@ const getMessage = async (req, res) => {
 const sendMessage = async (req, res) => {
   const { subject, content, isRead } = req.body;
 
+  // add message to db
   try {
-    const message = await Message.create({ subject, content, isRead: false });
+    const user_id = req.user._id;
+    const message = await Message.create({
+      subject,
+      content,
+      isRead: false,
+      user_id,
+    });
     res.status(200).json(message);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
+//@desc update a message
+//@method PATCH
+//@route /api/message/:id
+const updateMessage = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such message" });
+  }
+
+  try {
+    const message = await Message.findOneAndUpdate(
+      { _id: id },
+      { isRead: true },
+      { new: true }
+    );
+    if (message.isRead) {
+      res.status(200).json({ message });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+//@desc delete a message
+//@method DELETE
+//@route /api/message/:id
 const deleteMessage = async (req, res) => {
   const { id } = req.params;
 
@@ -56,22 +106,6 @@ const deleteMessage = async (req, res) => {
   res.status(200).json(message);
 };
 
-const updateMessage = async (req, res) => {
-  if (req.params.id) {
-    try {
-      const message = await Message.findOneAndUpdate(
-        { _id: req.params.id },
-        { isRead: true },
-        { new: true }
-      );
-      if (message.isRead) {
-        res.status(200).json({ message });
-      }
-    } catch (error) {
-      res.status(400).json({ message: "Request not authorized" });
-    }
-  }
-};
 
 module.exports = {
   getMessages,

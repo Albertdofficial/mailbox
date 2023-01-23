@@ -14,15 +14,17 @@ const {
   updateMessage
 } = require("../controllers/messageController");
 
+router.post("/", sendMessage);
+
 router.get("/", getMessages);
 
 router.get("/:id", getMessage);
 
-router.delete("/:id", deleteMessage);
-
 router.patch("/:id", updateMessage)
 
-// send a new message
-router.post("/", sendMessage);
+router.delete("/:id", deleteMessage);
+
+
+
 
 module.exports = router;
