@@ -1,8 +1,8 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 export const AuthContext = createContext();
 
-const authReducer = (state, action) => {
+export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload };
@@ -16,11 +16,23 @@ const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { user: null });
 
-  console.log('AuthContext state:', state);
+  // setting initial auth status wit predefined user
+  useEffect(() => {
+    const user = {
+      name: 'Albert',
+      email: "albert@gmail.com",
+      token:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2NlMmEzNjUxODU3YzEzYzA0NDRkODAiLCJpYXQiOjE2NzQ0NTU2MDd9.gAEaAR5bHw5rXC8AyTuhfuV9htlyIUZPpMQ2bbZFKzY",
+    };
+
+    if (user) {
+      dispatch({ type: "LOGIN", payload: user });
+    }
+  }, []);
 
   return (
-    <AuthContext.Provider value={{...state, dispatch}} >
-        {children}
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
     </AuthContext.Provider>
-  )
+  );
 };
