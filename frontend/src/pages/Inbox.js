@@ -19,6 +19,13 @@ const Inbox = () => {
   // use the messages from the context
   const { messages, dispatch } = useMessageContext(); // global state
 
+  let sortedMessages;
+
+  // displaying unread messages at the top
+  sortedMessages = messages
+    .slice()
+    .sort((msg1, msg2) => Number(msg1.isRead) - Number(msg2.isRead));
+
   const handleClick = async (id) => {
     try {
       setIsPending(true);
@@ -35,7 +42,7 @@ const Inbox = () => {
       );
       const message = response.data;
 
-      console.log('Inbox: ', message);
+      console.log("Inbox: ", message);
 
       // dispatch an update request
       dispatch({ type: "UPDATE_MESSAGE", payload: message });
@@ -52,8 +59,8 @@ const Inbox = () => {
 
   return (
     <div className="inbox">
-      {messages &&
-        messages.map((message) => (
+      {sortedMessages &&
+        sortedMessages.map((message) => (
           <div key={message._id} className="messages">
             <Link
               to={`/message/${message._id}`}
