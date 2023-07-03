@@ -20,7 +20,6 @@ export const messageReducer = (state, action) => {
         else
           return message
       })
-      console.log('frontend updateMessages: ' , updatedMessages)
       return {messages:updatedMessages}
     default:
       return state;
@@ -33,7 +32,7 @@ export const MessageContextProvider = ({ children }) => {
     error: null,
   });
 
-  console.log('Message Context State', state.messages);
+  // console.log('Message Context State', state.messages);
 
   return (
     <MessageContext.Provider value={{ ...state, dispatch }}>
